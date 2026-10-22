@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+spring:
+  application:
+    name: shirabete-matomeru-kun-backend
+  mvc:
+    problemdetails:
+      enabled: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+
+app:
+  research:
+    mode: ${RESEARCH_MODE:local}
+  storage:
+    mode: ${STORAGE_MODE:local}
+    directory: ${REPORT_STORAGE_DIRECTORY:./data/reports}
+  search:
+    mode: ${SEARCH_MODE:local}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
+  foundry:
+    project-endpoint: ${FOUNDRY_PROJECT_ENDPOINT:}
+    model-deployment: ${FOUNDRY_MODEL_DEPLOYMENT:}
+    agent-name-prefix: ${FOUNDRY_AGENT_NAME_PREFIX:}
+    learn-mcp-url: ${LEARN_MCP_URL:https://learn.microsoft.com/api/mcp}
+    allowed-tools:
+      - microsoft_docs_search
+      - microsoft_docs_fetch
+      - microsoft_code_sample_search
+    managed-identity-client-id: ${AZURE_CLIENT_ID:}
+    timeout-seconds: ${FOUNDRY_TIMEOUT_SECONDS:90}
+    max-approval-rounds: 4

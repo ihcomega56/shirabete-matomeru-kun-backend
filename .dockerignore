@@ -1,0 +1,8 @@
+.git
+build
+.gradle
+.tools
+target
+data
+.env
+*.log
