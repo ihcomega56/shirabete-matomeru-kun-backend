@@ -1,4 +1,6 @@
 .git
+build
+.gradle
 .tools
 target
 data

@@ -9,19 +9,19 @@
 
 ## ローカルで実行
 
-必要環境: **JDK 25、Maven 3.9.11 以降**。
+必要環境: **JDK 25**。Gradle Wrapperを同梱しているため、Gradleの事前インストールは不要です。
 
 ```sh
 java -version
-mvn -B -ntp verify
-mvn spring-boot:run
+./gradlew check
+./gradlew bootRun
 ```
 
 または:
 
 ```sh
-mvn -B -ntp package
-java -jar target/shirabete-matomeru-kun-backend-0.0.1-SNAPSHOT.jar
+./gradlew bootJar
+java -jar build/libs/shirabete-matomeru-kun-backend-0.0.1-SNAPSHOT.jar
 ```
 
 既定の URL は `http://localhost:8080`、保存先は起動ディレクトリの `./data/reports`。
@@ -185,7 +185,7 @@ export FOUNDRY_MODEL_DEPLOYMENT='YOUR-MODEL-DEPLOYMENT'
 export FOUNDRY_AGENT_NAME_PREFIX='shirabete'
 # ユーザー割当 ID の場合だけ設定:
 # export AZURE_CLIENT_ID='YOUR-MANAGED-IDENTITY-CLIENT-ID'
-mvn spring-boot:run
+./gradlew bootRun
 ```
 
 PC などマネージド ID のない環境はローカルモードを使用してください。
@@ -228,7 +228,7 @@ local への黙示的フォールバックはしません。
 - [公式 Java MCP サンプル](https://raw.githubusercontent.com/Azure/azure-sdk-for-java/main/sdk/ai/azure-ai-agents/src/samples/java/com/azure/ai/agents/tools/McpSync.java)
 - [公式 Java SDK README](https://raw.githubusercontent.com/Azure/azure-sdk-for-java/main/sdk/ai/azure-ai-agents/README.md)
 - [Microsoft Learn MCP の公式 URL・ツール説明](https://raw.githubusercontent.com/MicrosoftDocs/mcp/main/README.md)
-- SDK 2.8.0 の公開 Maven アーティファクトのソース・API を確認し、実際に依存解決・コンパイルしています。
+- SDK 2.8.0 の公開アーティファクトのソース・APIを確認し、実際に依存解決・コンパイルしています。
   SDK アップグレードや MCP ツール変更時は、承認ポリシーと応答解析を再検証してください。
 
 ## アーキテクチャ / 永続化
@@ -292,13 +292,13 @@ Foundry モードはマネージド ID を提供する実行基盤と上記環�
 ## テストと運用上の注意
 
 ```sh
-mvn -B -ntp verify
+./gradlew check
 ```
 
 テストは外部認証不要で、API の全ルート、入力検証、CORS、エラー変換、
 再生成したリポジトリからの永続データ取得、検索・順序・並行保存、
 Markdown 変換と危険 HTML、Foundry 選択 / 設定不足 / 承認制限 / 未検証出典 / provider 障害を検証します。
-テストデータは `target/test-data` 内に作成し、終了時に削除します。
+テストデータは `build/test-data` 内に作成し、終了時に削除します。
 Foundry のユニットテストは SDK の型を使用したセッション代替によるもので、Azure のライブ接続試験ではありません。
 
 認証、認可、ユーザーごとのデータ分離、レート制限、要求全体のタイムアウト、監査、

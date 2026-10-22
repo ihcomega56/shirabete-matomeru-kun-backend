@@ -18,5 +18,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 25
-          cache: maven
-      - run: mvn --batch-mode --no-transfer-progress verify
+          cache: gradle
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew --no-daemon clean check bootJar
